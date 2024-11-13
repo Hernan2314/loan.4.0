@@ -6,12 +6,15 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 # Load the model and scaler from .pkl files
+# Load the model and scaler from .pkl files without caching
 def load_model_and_scaler():
-    # Load the classifier and scaler
-    with open('classifier.pkl', 'rb') as model_file:
-        classifier = joblib.load(model_file)
-    scaler = joblib.load('scaler.pkl')
-    return classifier, scaler
+    # Load the GradientBoostingClassifier and StandardScaler
+    model = joblib.load('classifier.pkl')  # Load the classifier (model)
+    scaler = joblib.load('scaler.pkl')     # Load the scaler
+    return model, scaler
+
+# Load model and scaler
+model, scaler = load_model_and_scaler()
 
 # Prediction function for single input
 def prediction(Gender, Married, ApplicantIncome, LoanAmount, Credit_History):
