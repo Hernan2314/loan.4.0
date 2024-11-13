@@ -1,5 +1,3 @@
-import pickle  # Importing the pickle library
-import joblib  # For loading the scaler
 import streamlit as st
 import numpy as np
 import matplotlib.pyplot as plt
@@ -7,32 +5,19 @@ import seaborn as sns
 import pandas as pd
 import io  # For in-memory CSV download
 
-
-# Load the classifier
-with open('classifier.pkl', 'rb') as pickle_in:
-    classifier = pickle.load(pickle_in)
-
-# Load the scaler
-scaler = joblib.load('scaler.pkl')
-
-
 @st.cache_data()
 def prediction(Gender, Married, ApplicantIncome, LoanAmount, Credit_History):   
     # Pre-process user input
     Gender = 0 if Gender == "Male" else 1
     Married = 0 if Married == "Unmarried" else 1
     Credit_History = 0 if Credit_History == "Unclear Debts" else 1
-    LoanAmount = LoanAmount / 1000  # Scale loan amount if required
+    LoanAmount = LoanAmount / 1000  # Simulate scaling for loan amount
 
-    # Create the feature array
-    features = np.array([Gender, Married, ApplicantIncome, LoanAmount, Credit_History]).reshape(1, -1)
-
-    # Scale the features using the loaded scaler
-    scaled_features = scaler.transform(features)
-
-    # Predict with scaled features
-    prediction = classifier.predict(scaled_features)
-    return 'Approved' if prediction == 1 else 'Rejected'
+    # Simulate a decision based on a simple threshold logic
+    if Credit_History == 1 and ApplicantIncome >= 4000 and LoanAmount <= ApplicantIncome * 10:
+        return 'Approved'
+    else:
+        return 'Rejected'
 
 # Streamlit Interface
 def main():
