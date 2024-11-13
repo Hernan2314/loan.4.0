@@ -7,12 +7,14 @@ import seaborn as sns
 import pandas as pd
 import io  # For in-memory CSV download
 
-# Load the trained model
-pickle_in = open('classifier.pkl', 'rb') 
-classifier = pickle.load(pickle_in)
+
+# Load the classifier
+with open('classifier.pkl', 'rb') as pickle_in:
+    classifier = pickle.load(pickle_in)
 
 # Load the scaler
 scaler = joblib.load('scaler.pkl')
+
 
 @st.cache_data()
 def prediction(Gender, Married, ApplicantIncome, LoanAmount, Credit_History):   
